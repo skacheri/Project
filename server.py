@@ -31,6 +31,7 @@ def check_login():
         flash('You are successfully logged in')
         return redirect('/log_meal')
     else:
+        flash('Try the combination of email and password again!')
         return redirect('/')
 
 """--------------------------------------------------------"""
@@ -43,12 +44,37 @@ def register_user():
 
 """--------------------------------------------------------"""
 
+@app.route('/register', methods=['POST'])
+def check_register_user():
+    """Check Registration for user"""
+
+    email = request.form.get("email")
+    query = User.query.filter(User.email == email).first()
+
+    if query:
+        flash('The email entered is already in use, try logging in!')
+        return redirect('/')
+    else:
+        return redirect('/thank_you')
+
+"""--------------------------------------------------------"""
+
 @app.route('/thank_you', methods=['POST'])
 def thank_user():
     """Thank user for registering"""
 
+    #fetching data from form
+    f_name = request.form.get("f_name")
+    l_name = request.form.get("l_name")
+    email = request.form.get("email")
+    password = request.form.get("password")
+
+    #inserting data obtained from form into the database
+    user = User(f_name=f_name, l_name=l_name, email=email, password=password)
+    db.session.add(user)
+    db.session.commit()
+
     flash('Thank you for registering for your Meal Plate Tracker')
-    #need to fetch data from form and insert into database
     return redirect('/log_meal')
 
 """--------------------------------------------------------"""
@@ -61,7 +87,7 @@ def log_meal():
 
 """---------------------------------------------------------"""
 
-@app.route('/looged-meal')
+@app.route('/logged-meal')
 def logged_meal():
     """User loged meal will enter database"""
 

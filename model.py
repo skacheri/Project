@@ -28,19 +28,19 @@ class Meal(db.Model):
 
     meal_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
-    mealtime = db.Column(db.DateTime)
+    meal_time = db.Column(db.DateTime)
     meal_name = db.Column(db.String(50)) #either breakfast, lunch or dinner from user dropdown
     #2.0 features for calorie count:
     # meal_description = db.Column(db.String(50), nullable=True) #nullable for now
     # calories = db.Column(db.Numeric(8, 2), nullable=True) #nullable for now
 
     users = db.relationship("User", backref="meals")
-    foodgroups = db.relationship("Foodgroup", secondary="meals_foodgroups", backref="meals")
+    foodgroups = db.relationship("Foodgroup", secondary="meal_foodgroups", backref="meals")
 
     def __repr__(self):
         """Provide helpful representation of class Meal when printed"""
 
-        return ('Meal: id={} mealtime={}'.format(self.meal_id, self.mealtime))
+        return ('Meal: id={} mealtime={}'.format(self.meal_id, self.meal_time))
 
 
 class Foodgroup(db.Model):
@@ -70,7 +70,9 @@ class Meal_Foodgroup(db.Model):
     def __repr__(self):
         """Provide helpful representation of class Meal_Foodgroup(association table)"""
 
-        return ('meal-foodgroup-id: {} meal-id: {}'.format(self.meal_foodgroup_id, self.meal_id))
+        return ('meal-foodgroup-id: {}, meal-id: {}, foodgroup_id: {}, percentage_meal: {}'
+                .format(self.meal_foodgroup_id, self.meal_id,
+                        self.foodgroup_id, self.percentage_meal))
 """"""
 """"""
 
@@ -89,7 +91,6 @@ if __name__ == "__main__":
     # you in a state of being able to work with the database directly.
 
     from server import app
-
     connect_to_db(app)
     print("Connected to DB.")
     db.create_all()
