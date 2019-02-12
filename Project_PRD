@@ -1,0 +1,60 @@
+Why this topic?
+People usually measure their calorie intake and limit their calories on a daily basis, but surely not every meal is perfectly balanced per recommendations. With this users can document on a pie graph the approximate percent of food groups in an easy visual format and plan which categories they are eating more of or less of. 
+
+Project MVP
+
+Users of this web page can login and document the category(fruits, vegetables, protein, carbs) of food, what category of drink and what category of oil they consumed at each meal on a plate chart (plate visual). 
+The plate will have set percentages of 40, 10, 25, 25. 
+There will be an ideal plate that users can compare their progress to. 
+Users can maintain a log of these plate visuals / day and view it on a calendar. 
+
+
+Copyright © 2011, Harvard University. For more information about The Healthy Eating Plate, please see The Nutrition Source, Department of Nutrition, Harvard School of Public Health, www.thenutritionsource.org, and Harvard Health Publications, www.health.harvard.edu.
+
+
+
+In a later version they can also answer the meal they ate and get the amount of calories they consumed.
+In an even later version users can get the amount of calories that a user should eat based on some questions and get the amount of serving size per food group. Users can enter their mood before and after meals and get recommendations for next meal.
+
+MVP features:
+Login page
+Selecting meal categories in pie chart on dropdown
+Storing the user input data in a database
+2.0 features:
+Textual rendering of the food consumed
+Calorie count with user entered meals using Nutritionix/USDA API
+Links on category selection page with list of each food group to help user decide which category their food is in
+
+3.0 features:
+
+Do users want to know how much should be there ideal calorie intake? Second link is that of a calculation formula to implement to calculate the daily calorie intake of a person based on few parameters:
+https://www.choosemyplate.gov/myplateplan
+https://www.calculator.net/calorie-calculator.html
+Is the user interested in the breakdown of how many servings of each food group they should consume based on the calorie intake? If yes there is a data chart with that breakdown that says the serving size per day of each food group and some eg of what constitutes that serving size for each food category.
+https://www.calculator.net/calorie-calculator.html (Once you click submit it takes you to the page that displays serving size of each food group.
+      3.   Track moods per meal and once enough date, give recommendations for next meal
+
+
+API:
+Nutritionix api: https://developer.nutritionix.com/docs/v1_1 (limitation on active users of 2, but for demo should work). It has an item description, calories and serving size.
+Format of Response:
+https://docs.google.com/spreadsheets/d/1jZSa039OfpQOiRzaS980nPKCvVe2TRKRPZk7ZbaH7kE/edit#gid=0 
+USDA API: https://ndb.nal.usda.gov/ndb/doc/index 
+NDB (usda) api for calculation of calories of food items:(attached is the link to the response format for this)
+http://api.nal.usda.gov/ndb/nutrients/?format=json&api_key=DEMO_KEY&nutrients=205&nutrients=204&nutrients=208&nutrients=269
+
+Data storage:
+User login data
+Meal information as entered by the user
+Calorie info per meal 🥘 if get to 2.0 feature
+
+Resources:
+USDA
+https://foh.psc.gov/calendar/nutrition.html : Using this to break down pie chart based on percentage of each food group.
+
+Healthy Plate:
+Copyright © 2011, Harvard University. For more information about The Healthy Eating Plate, please see The Nutrition Source, Department of Nutrition, Harvard School of Public Health, www.thenutritionsource.org, and Harvard Health Publications, www.health.harvard.edu.
+
+
+
+

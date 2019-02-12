@@ -65,7 +65,7 @@ class Meal_Foodgroup(db.Model):
     meal_foodgroup_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     meal_id = db.Column(db.Integer, db.ForeignKey('meals.meal_id'))
     foodgroup_id = db.Column(db.Integer, db.ForeignKey('foodgroups.foodgroup_id'))
-    plate_section_id = db.Column(db.Integer)
+    percentage_meal = db.Column(db.Integer)
 
     def __repr__(self):
         """Provide helpful representation of class Meal_Foodgroup(association table)"""
