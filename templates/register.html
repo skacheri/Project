@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<form action="/thank_you", method= "POST">
+    <label>First Name
+        <input type="text" name="f_name"></input>
+    </label>
+    <br> 
+    <label>Last Name
+        <input type="text" name="l_name"></input>
+    </label>
+    <br>      
+    <label>Email address
+        <input type="text" name="email"></input>
+    </label>
+    <br>
+    <label>Password
+        <input type="text" name ="password"></input>
+    </label>
+    <br>
+    <input type="submit" value="register"></input>
+</form>
+
+{% endblock %}
+

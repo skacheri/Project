@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>Welcome to your Meal Plate Tracker!</h1>
+
+<form action="/log_in_check" method="POST">
+    <label>Email Address:
+        <input type="text" name="email"></input>
+    </label>
+    <br>
+    <label>Password:
+        <input type="text" name="password"></input>
+    </label>
+    <br>
+    <input type="submit" name="login"></input>
+</form>
+
+<div>
+    First time users please register here
+    <form action="/register">
+        <input type="submit" value="register"></input>
+    </form>
+</div>
+
+
+
+
+{% endblock %}
+
+
