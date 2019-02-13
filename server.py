@@ -1,6 +1,6 @@
 from flask import Flask, render_template, redirect, session, request, flash
 from flask_debugtoolbar import DebugToolbarExtension
-from model import User, Meal, Foodgroup, Meal_Foodgroup
+from model import User, Meal, Foodgroup, Meal_Foodgroup, db, connect_to_db
 
 app = Flask(__name__)
 
@@ -24,7 +24,7 @@ def check_login():
     password = request.form.get("password")
 
     #Email and password query check if mateches
-    query = User.query.filter(User.email == email , User.password == password).first()
+    query = User.query.filter(User.email == email, User.password == password).first()
 
     if query:
         session['user_id'] = query.user_id
@@ -49,33 +49,43 @@ def check_register_user():
     """Check Registration for user"""
 
     email = request.form.get("email")
-    query = User.query.filter(User.email == email).first()
+    query = User.query.filter(User.email==email).first()
 
     if query:
         flash('The email entered is already in use, try logging in!')
         return redirect('/')
     else:
-        return redirect('/thank_you')
+        f_name = request.form.get("f_name")
+        l_name = request.form.get("l_name")
+        email = request.form.get("email")
+        password = request.form.get("password")
+
+        user = User(f_name=f_name, l_name=l_name, email=email, password=password)
+        db.session.add(user)
+        db.session.commit()
+
+        flash('Thank you for registering for your Meal Plate Tracker')
+        return redirect('/log_meal')
 
 """--------------------------------------------------------"""
 
-@app.route('/thank_you', methods=['POST'])
-def thank_user():
-    """Thank user for registering"""
+# @app.route('/thank_you', methods=['POST'])
+# def thank_user():
+#     """Thank user for registering"""
 
-    #fetching data from form
-    f_name = request.form.get("f_name")
-    l_name = request.form.get("l_name")
-    email = request.form.get("email")
-    password = request.form.get("password")
+#     #fetching data from form
+#     f_name = request.form.get("f_name")
+#     l_name = request.form.get("l_name")
+#     email = request.form.get("email")
+#     password = request.form.get("password")
 
-    #inserting data obtained from form into the database
-    user = User(f_name=f_name, l_name=l_name, email=email, password=password)
-    db.session.add(user)
-    db.session.commit()
+#     #inserting data obtained from form into the database
+#     user = User(f_name=f_name, l_name=l_name, email=email, password=password)
+#     db.session.add(user)
+#     db.session.commit()
 
-    flash('Thank you for registering for your Meal Plate Tracker')
-    return redirect('/log_meal')
+#     flash('Thank you for registering for your Meal Plate Tracker')
+#     return redirect('/log_meal')
 
 """--------------------------------------------------------"""
 
@@ -87,11 +97,11 @@ def log_meal():
 
 """---------------------------------------------------------"""
 
-@app.route('/logged-meal')
+@app.route('/log-meal', methods=['POST'])
 def logged_meal():
     """User loged meal will enter database"""
-
-    pass
+    
+    
 
 """-----------------------------------------------------------"""
 """-----------------------------------------------------------"""
@@ -99,6 +109,8 @@ def logged_meal():
 if __name__ == "__main__":
 
     app.debug = True
+    connect_to_db(app)
     DebugToolbarExtension(app)
+
 
     app.run(port=5000, host='0.0.0.0')
