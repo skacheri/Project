@@ -1,57 +1,80 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<form action='/log_meal', method="POST">
+<form action='/log_meal', method= "POST">
+ Select Meal name:
+    <br>
+    <input type="radio" name="meal_name" value="breakfast">Breakfast</input>
+    <input type="radio" name="meal_name" value="lunch">Lunch</input>
+    <input type="radio" name="meal_name" value="dinner">Dinner</input>
+    <br>
+    <br>
   Meal component:
     <select name="meal_component_40">
-        <option value="carbohydrates">Carbohydrates</option>
-        <option value="protein">Protein</option>
-        <option value="vegetables">Vegetables</option>
-        <option value="fruits">Fruits</option>
+        <option value="Carbohydrates">Carbohydrates</option>
+        <option value="Proteins">Proteins</option>
+        <option value="Vegetables">Vegetables</option>
+        <option value="Fruits">Fruits</option>
     </select>
 
     <select name="meal_component_10">
-        <option value="carbohydrates">Carbohydrates</option>
-        <option value="protein">Protein</option>
-        <option value="vegetables">Vegetables</option>
-        <option value="fruits">Fruits</option>
+        <option value="Carbohydrates">Carbohydrates</option>
+        <option value="Proteins">Proteins</option>
+        <option value="Vegetables">Vegetables</option>
+        <option value="Fruits">Fruits</option>
     </select>
 
     <select name="meal_component_25">
-        <option value="carbohydrates">Carbohydrates</option>
-        <option value="protein">Protein</option>
-        <option value="vegetables">Vegetables</option>
-        <option value="fruits">Fruits</option>
+        <option value="Carbohydrates">Carbohydrates</option>
+        <option value="Proteins">Proteins</option>
+        <option value="Vegetables">Vegetables</option>
+        <option value="Fruits">Fruits</option>
     </select>
 
-    <select name="meal_component_25_2">
-        <option value="carbohydrates">Carbohydrates</option>
-        <option value="protein">Protein</option>
-        <option value="vegetables">Vegetables</option>
-        <option value="fruits">Fruits</option>
+    <select name="meal_component_2_25">
+        <option value="Carbohydrates">Carbohydrates</option>
+        <option value="Proteins">Proteins</option>
+        <option value="Vegetables">Vegetables</option>
+        <option value="Fruits">Fruits</option>
     </select>
+    <br>
     <br>
     Drink component:
     <select name="meal_component_drink">
-        <option value="water">Water</option>
-        <option value="juice">Juice</option>
-        <option value="dairy">Dairy</option>
-        <option value="soda">Soda</option>
-        <option value="tea_no_sugar">Tea no sugar</option>
-        <option value="coffee_no_sugar">Coffee no sugar</option>
-        <option value="tea_with_sugar">Tea with sugar</option>
-        <option value="coffee_with_sugar">Coffee with sugar</option>
+        <option value="Water">Water</option>
+        <option value="Juice">Juice</option>
+        <option value="Dairy">Dairy</option>
+        <option value="Soda">Soda</option>
+        <option value="Tea_no_sugar">Tea no sugar</option>
+        <option value="Coffee_no_sugar">Coffee no sugar</option>
+        <option value="Tea_with_sugar">Tea with sugar</option>
+        <option value="Coffee_with_sugar">Coffee with sugar</option>
     </select>
     <br>
+    <br>
     Oil component:
-    <select name="meal_component_drink">
-        <option value="unsaturated">Unsaturated Fat</option>
-        <option value="saturated">Saturated Fat</option>
-        <option value="trans">Trans Fat</option>
+    <select name="meal_component_oil">
+        <option value="Unsaturated_fat">Unsaturated Fat</option>
+        <option value="Saturated_fat">Saturated Fat</option>
+        <option value="Trans_fat">Trans Fat</option>
     </select>
-</form>
 
-Need clarification on categories of food:
-<!-- Will need to put links to Protein, Carbs, Veg, Fruit, Drinks, Oils -->
+    <input type="submit" value="log_meal"></input>
+</form>
+<br>
+<br>
+##################################################################
+<br>
+TO DO:
+<br>
+-Need clarification on categories of food:
+<br>
+Will need to put links to Protein, Carbs, Veg, Fruit, Drinks, Oils
+<br>
+-Will need a button to view calender
+<br>
+-Will need a button to logout and route to /logged_out
+<br>
+##################################################################
 
 {% endblock %}
