@@ -28,7 +28,7 @@ class Meal(db.Model):
 
     meal_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
-    meal_time = db.Column(db.DateTime)
+    meal_time = db.Column(db.DateTime, nullable=True)
     meal_name = db.Column(db.String(50)) #either breakfast, lunch or dinner from user dropdown
     #2.0 features for calorie count:
     # meal_description = db.Column(db.String(50), nullable=True) #nullable for now
