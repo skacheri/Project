@@ -146,7 +146,18 @@ def logged_meal():
     db.session.commit()
 
 
-    return redirect('/')
+    return redirect('/calendar')
+
+"""---------------------------------------------------------"""
+
+@app.route("/calendar")
+def render_calendar():
+    """Render data stored by user for each meal"""
+
+
+    return render_template("/calendar.html")
+
+
 
 """---------------------------------------------------------"""
 
