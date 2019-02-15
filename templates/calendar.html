@@ -1,6 +1,20 @@
 {% extends 'base.html' %}
 {% block content %}
 
+<h3>Meals:<h3>
+
+    <ul>
+        {% for meal in meals_for_user %}
+            <li>{{ meal.meal_name }}
+                {% for m in meal.meal_foodgroups %}
+                    <li>{{ m.foodgroup_id, m.percentage_meal }}</li>
+                {% endfor %}
+            </li>
+
+        {% endfor %}
+    </ul>
+
+
 
 
 {% endblock %}

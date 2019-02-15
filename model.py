@@ -36,6 +36,7 @@ class Meal(db.Model):
 
     users = db.relationship("User", backref="meals")
     foodgroups = db.relationship("Foodgroup", secondary="meal_foodgroups", backref="meals")
+    meal_foodgroups = db.relationship("Meal_Foodgroup", backref="meals")
 
     def __repr__(self):
         """Provide helpful representation of class Meal when printed"""

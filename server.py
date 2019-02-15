@@ -160,9 +160,11 @@ def logged_meal():
                                     foodgroup_id=foodgroup_dictionary[meal_component_2_25],
                                     percentage_meal=25)
     meal_foodgroupdrink = Meal_Foodgroup(meal_id=meal_id,
-                                    foodgroup_id=foodgroup_dictionary[meal_component_drink])    
+                                    foodgroup_id=foodgroup_dictionary[meal_component_drink],
+                                    percentage_meal=1)    
     meal_foodgroupoil = Meal_Foodgroup(meal_id=meal_id,
-                                    foodgroup_id=foodgroup_dictionary[meal_component_oil])
+                                    foodgroup_id=foodgroup_dictionary[meal_component_oil],
+                                    percentage_meal=2)
 
 
     db.session.add_all([meal_foodgroup40, meal_foodgroup10, meal_foodgroup25,
@@ -180,7 +182,13 @@ def render_calendar():
 
     # NEED TO WORK ON THIS
     # JS chart plugin
-    return render_template("calendar.html")
+    # get user_id from session
+    user_id = session.get('user_id')
+    # get meals for user_id
+    meals_for_user = Meal.query.filter(Meal.user_id==user_id).order_by(Meal.meal_time).all()
+
+
+    return render_template("calendar.html", meals_for_user=meals_for_user)
 
 
 
