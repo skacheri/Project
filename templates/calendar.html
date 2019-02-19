@@ -1,20 +1,47 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h3>Meals:<h3>
+<script>
 
-    <ul>
+    function setCalendarContent() {
+        //initialize a empty list of events
+        let events = [];
+        //loop through the meals to obtain each meal
         {% for meal in meals_for_user %}
-            <li>{{ meal.meal_name }}
-                {% for m in meal.meal_foodgroups %}
-                    <li>{{ m.foodgroup_id, m.percentage_meal }}</li>
-                {% endfor %}
-            </li>
+            //initialize an empty event object to store each meal data
+            event = {};
+            event.title='{{ meal.meal_name }}';
+            event.start='{{ meal.meal_time }}';
+            //initialize an empty meal foodgroup list for each meal food info
+            event.meal_foodgroups=[];
 
+            //loop through each of the mral_foodgroups in each meal
+            {% for m in meal.meal_foodgroups %}
+                //add to the empty meal_foodgroups list each component in a particular format as defined in model.py
+                event.meal_foodgroups.push({{ m.serialize()|tojson }});
+                // {{ m }}
+
+            {% endfor %}
+
+            event.allDay=false
+            //add to the events list each event
+            events.push(event)
         {% endfor %}
-    </ul>
+        $('#calendar').fullCalendar({
+            events:events
+            // eventRender: function(calEvent, element) {
+            //     element.qtip({
+            //         content: event.description
+            //     })
+            // } 
+
+        })
+    }
+    $(setCalendarContent);
 
 
+</script>
 
+<div id='calendar'></div>
 
 {% endblock %}

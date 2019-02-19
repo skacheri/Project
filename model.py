@@ -28,7 +28,7 @@ class Meal(db.Model):
 
     meal_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
-    meal_time = db.Column(db.DateTime, nullable=True)
+    meal_time = db.Column(db.TIMESTAMP(timezone=True), nullable=True)
     meal_name = db.Column(db.String(50)) #either breakfast, lunch or dinner from user dropdown
     #2.0 features for calorie count:
     # meal_description = db.Column(db.String(50), nullable=True) #nullable for now
@@ -74,6 +74,14 @@ class Meal_Foodgroup(db.Model):
         return ('meal-foodgroup-id: {}, meal-id: {}, foodgroup_id: {}, percentage_meal: {}'
                 .format(self.meal_foodgroup_id, self.meal_id,
                         self.foodgroup_id, self.percentage_meal))
+
+    def serialize(self):
+        return {
+            "meal_id": self.meal_id,
+            "foodgroup_id": self.foodgroup_id,
+            "percentage_meal": self.percentage_meal
+            }
+
 """"""
 """"""
 

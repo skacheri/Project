@@ -2,7 +2,11 @@ from flask import Flask, render_template, redirect, session, request, flash
 from flask_debugtoolbar import DebugToolbarExtension
 from model import User, Meal, Foodgroup, Meal_Foodgroup, db, connect_to_db
 import datetime
+import pytz
+import tzlocal
+
 from jinja2 import StrictUndefined
+import json
 
 app = Flask(__name__)
 
@@ -118,8 +122,14 @@ def logged_meal():
     meal_time_html = request.form.get("meal_time")
     if meal_time_html:
         meal_time = datetime.datetime.strptime(meal_time_html, '%Y-%m-%dT%H:%M')
+
+
     else:
+        local_timezone = tzlocal.get_localzone()
         meal_time = datetime.datetime.utcnow()
+        print(meal_time.replace(tzinfo=pytz.utc).astimezone(local_timezone))
+
+
 
 
     meal_name = request.form.get("meal_name")
@@ -136,15 +146,16 @@ def logged_meal():
 
     # adding user_id and meal_name to the meal table in database
     meal = Meal(user_id=user_id, meal_time=meal_time, meal_name=meal_name)
+    # meal.users.user_id.append(meal) instead of the user_id=user_id above
     db.session.add(meal)
     db.session.commit()
 
     # fetching the meal_id of currently entered meal and storing it in variable
     meal_id = meal.meal_id 
 
-    ########################################################
-    ####Think of a for loop, or a dictionary!!!!!!!#########
-    ########################################################
+    ############################################################################
+    ####Think of a for loop, or a dictionary for bottom chunk of code!!!########
+    ############################################################################
 
     # adding the foodgroups, meal, user, percentage to meal_foodgroups table
     meal_foodgroup40 = Meal_Foodgroup(meal_id=meal_id,
@@ -180,15 +191,15 @@ def logged_meal():
 def render_calendar():
     """Render data stored by user for each meal"""
 
-    # NEED TO WORK ON THIS
-    # JS chart plugin
     # get user_id from session
     user_id = session.get('user_id')
     # get meals for user_id
-    meals_for_user = Meal.query.filter(Meal.user_id==user_id).order_by(Meal.meal_time).all()
+    meals_for_user = Meal.query.filter(Meal.user_id==user_id).order_by(
+                    Meal.meal_time).options(db.joinedload("meal_foodgroups")).all()
 
 
-    return render_template("calendar.html", meals_for_user=meals_for_user)
+    return render_template("calendar.html", 
+                           meals_for_user=meals_for_user)
 
 
 
