@@ -121,15 +121,12 @@ def logged_meal():
 
     meal_time_html = request.form.get("meal_time")
     if meal_time_html:
-        meal_time = datetime.datetime.strptime(meal_time_html, '%Y-%m-%dT%H:%M')
-
-
+        local_zone = pytz.timezone("US/Pacific")
+        meal_time_local = datetime.datetime.strptime(meal_time_html, '%Y-%m-%dT%H:%M')
+        datetime_with_tz = local_zone.localize(meal_time_local, is_dst=None) # No daylight saving
+        meal_time = datetime_with_tz.astimezone(pytz.utc)
     else:
-        local_timezone = tzlocal.get_localzone()
         meal_time = datetime.datetime.utcnow()
-        print(meal_time.replace(tzinfo=pytz.utc).astimezone(local_timezone))
-
-
 
 
     meal_name = request.form.get("meal_name")
@@ -199,7 +196,8 @@ def render_calendar():
 
 
     return render_template("calendar.html", 
-                           meals_for_user=meals_for_user)
+                           meals_for_user=meals_for_user
+                           )
 
 
 

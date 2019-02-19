@@ -4,14 +4,16 @@
 <script>
 
     function setCalendarContent() {
-        //initialize a empty list of events
+        //initialize a empty list of events because fullcalendar understands lists
         let events = [];
         //loop through the meals to obtain each meal
         {% for meal in meals_for_user %}
             //initialize an empty event object to store each meal data
             event = {};
             event.title='{{ meal.meal_name }}';
-            event.start='{{ meal.meal_time }}';
+
+            event.start_utc=moment.utc('{{ meal.meal_time }}');
+            event.start=moment(event.start_utc).local().format("YYYY-MM-DD HH:mm:ss");
             //initialize an empty meal foodgroup list for each meal food info
             event.meal_foodgroups=[];
 
@@ -26,22 +28,25 @@
             event.allDay=false
             //add to the events list each event
             events.push(event)
-        {% endfor %}
-        $('#calendar').fullCalendar({
-            events:events
-            // eventRender: function(calEvent, element) {
-            //     element.qtip({
-            //         content: event.description
-            //     })
-            // } 
 
+        {% endfor %}
+        //from fullcalendar, to initialize calendar
+        $('#calendar').fullCalendar({
+            //passing in events
+            events: events,
+            eventClick: function(calEvent, jsEvent, view) {
+                $("#meal_info").text('');
+                for (m in calEvent.meal_foodgroups) {
+                    //document.write(m);
+                    $("#meal_info").append(JSON.stringify(calEvent.meal_foodgroups[m]));
+                }
+            },
         })
     }
     $(setCalendarContent);
-
-
 </script>
 
 <div id='calendar'></div>
+<div id='meal_info'></div>
 
 {% endblock %}
