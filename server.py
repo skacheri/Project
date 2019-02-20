@@ -196,7 +196,7 @@ def render_calendar():
 
 
     return render_template("calendar.html", 
-                           meals_for_user=meals_for_user
+                           meals_for_user=meals_for_user,
                            )
 
 

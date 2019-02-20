@@ -68,6 +68,8 @@ class Meal_Foodgroup(db.Model):
     foodgroup_id = db.Column(db.Integer, db.ForeignKey('foodgroups.foodgroup_id'))
     percentage_meal = db.Column(db.Integer)
 
+    foodgroups = db.relationship("Foodgroup")
+
     def __repr__(self):
         """Provide helpful representation of class Meal_Foodgroup(association table)"""
 
@@ -78,7 +80,7 @@ class Meal_Foodgroup(db.Model):
     def serialize(self):
         return {
             "meal_id": self.meal_id,
-            "foodgroup_id": self.foodgroup_id,
+            "foodgroup_name": self.foodgroups.foodgroup_name,
             "percentage_meal": self.percentage_meal
             }
 

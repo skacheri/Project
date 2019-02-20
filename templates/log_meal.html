@@ -1,6 +1,52 @@
 {% extends 'base.html' %}
 {% block content %}
 
+<div id="pie_chart"></div>
+
+<script>
+    <!-- //www.knowlarity.com/blog/creating-pie-chart-d3-js-step-step/ -->
+    // https://www.youtube.com/watch?v=P8KNr0pDqio
+    // https://www.dashingd3js.com/lessons/d3-and-html-forms
+
+var width = 750;
+var height = 500;
+var colors = d3.scaleOrdinal(d3.schemeDark2);
+
+var svg = d3.select('#pie_chart').append('svg').attr('width', width).attr('height', height);
+
+var details = [{label:"Vegetables", percent:40}, {label:"Fruits", percent:10}, {label:"Carbohydrates", percent:25}, {label:"Proteins", percent:25}]
+
+// since data that i need to pass is an object, need to pass a function(d or data) which returns d.percent from details and sort null will sort in the order given
+var data = d3.pie().sort(null).value(function(d){return d.percent;})(details);
+
+
+console.log(data);
+
+var segments = d3.arc() //arc generator fucntion
+                .innerRadius(0)
+                .outerRadius(200)
+                .padAngle(.05)
+                .padRadius(50);
+
+// path elements for different sections
+var sections = svg.append("g").attr("transform", "translate(250, 250)").selectAll("path").data(data); //join data
+
+//append path elements
+sections.enter().append("path").attr("d", segments).attr("fill", function(d){return colors(d.data.label)});
+
+var content = d3.select("g").selectAll("text").data(data);
+content.enter().append("text").each(function(d){
+    var center = segments.centroid(d);
+    d3.select(this).attr("x", center[0]).attr("y", center[1])
+                    .text(d.data.percent);
+
+var legends = svg.append("g").attr("transform", "translate(500, 300)").selectAll(".legends").data(data);
+var legend = legends.enter.append("g").classed("legends", true).attr("transform", function(d, i){return "translate(0," + (i+i)*30 +")"});
+legend.append("rect").attr("width", 20).attr("height", 20).attr("fill", function(d){return colors(d.data.label)})
+
+})
+
+</script>
 
 <form action='/log_meal', method= "POST">
 
