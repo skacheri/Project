@@ -60,9 +60,6 @@ def check_login():
         return redirect('/log_meal')
     else:
         flash('Try logging in again or register if first time user!') 
-        #####################################################################
-        ###Will need to work as if user is not registered then gives this error
-        ####################################################################
         return redirect('/')
 
 #--------------------------------------------------------

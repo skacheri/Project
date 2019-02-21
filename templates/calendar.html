@@ -37,22 +37,22 @@
         $('#calendar').fullCalendar({
             //passing in events
             events: events,
-            // eventRender: function(eventObj, $el) {
-    //   $el.popover({
-    //     title: eventObj.title,
-    //     content: eventObj.description,
-    //     trigger: 'hover',
-    //     placement: 'top',
-    //     container: 'body'
-    //   });
-    // },
-            eventClick: function(calEvent, jsEvent, view) {
-                $("#meal_info").text('');
-                for (m in calEvent.meal_foodgroups) {
-                    //document.write(m);
-                    $("#meal_info").append(JSON.stringify(calEvent.meal_foodgroups[m]));
-                }
+            eventRender: function(eventObj, $el) {
+              $el.popover({
+                title: eventObj.title,
+                content: eventObj.description,
+                trigger: 'hover',
+                placement: 'top',
+                container: 'body'
+              });
             },
+            // eventClick: function(calEvent, jsEvent, view) {
+            //     $("#meal_info").text('');
+            //     for (m in calEvent.meal_foodgroups) {
+            //         //document.write(m);
+            //         $("#meal_info").append(JSON.stringify(calEvent.meal_foodgroups[m]));
+            //     }
+            // },
         })
     }
     $(setCalendarContent);
