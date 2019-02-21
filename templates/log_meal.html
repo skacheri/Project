@@ -10,7 +10,9 @@
 
 var width = 750;
 var height = 500;
-var colors = d3.scaleOrdinal(d3.schemeDark2);
+var colors = d3.scaleOrdinal()
+                .domain(["Vegetables", "Fruits", "Carbohydrates", "Proteins"])
+                .range(["green", "orange", "saddlebrown", "darkviolet"]);
 
 var svg = d3.select('#pie_chart').append('svg').attr('width', width).attr('height', height);
 
@@ -49,6 +51,19 @@ legend.append("text").text(function(d){return d.data.foodgroup;})
         .attr("x", 30)
         .attr("y", 15);
 
+// var legends = svg.append("g").attr("transform", "translate(500, 200)").selectAll(".legends").data(colors);
+// var legend = legends.enter().append("g").attr("transform", function(d, i){return "translate(0," + (i+1)*30 + ")";});
+// legend.append("rect").attr("width", 20).attr("height", 20).attr("fill", function(d){return colors(d.data.foodgroup);});
+// legend.append("text").text(function(d){return d.data.foodgroup;})
+//         .attr("fill", function(d){return colors(d.data.foodgroup);})
+//         .attr("x", 30)
+//         .attr("y", 15);
+
+// svg.selectAll("sections")
+//     .on("click", function() {
+//         d3.select(this)
+//         .attr("fill", "")
+// });
 
 
 </script>
