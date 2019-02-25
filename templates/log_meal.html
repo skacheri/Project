@@ -1,74 +1,28 @@
 {% extends 'base.html' %}
 {% block content %}
-
+<script src='/static/mealchartinput.js'></script>
 <div id="pie_chart"></div>
 
-<script>
-    <!-- //www.knowlarity.com/blog/creating-pie-chart-d3-js-step-step/ -->
-    // https://www.youtube.com/watch?v=P8KNr0pDqio
-    // https://www.dashingd3js.com/lessons/d3-and-html-forms
+<script type="text/javascript">
+$(function(argument) {
+    // Initialize time to now
+    let today = moment().format('YYYY-MM-DDTHH:mm');
+    $("input[name='meal_time']").val(today);
 
-var width = 750;
-var height = 500;
-var colors = d3.scaleOrdinal()
-                .domain(["Vegetables", "Fruits", "Carbohydrates", "Proteins"])
-                .range(["green", "orange", "saddlebrown", "darkviolet"]);
-
-var svg = d3.select('#pie_chart').append('svg').attr('width', width).attr('height', height);
-
-var details = [{foodgroup:"Vegetables", percent:40}, {foodgroup:"Fruits", percent:10}, {foodgroup:"Carbohydrates", percent:25}, {foodgroup:"Proteins", percent:25}]
-
-// since data that i need to pass is an object, need to pass a function(d or data) which returns d.percent from details and sort null will sort in the order given
-var data = d3.pie().sort(null).value(function(d){return d.percent;})(details);
-
-
-console.log(data);
-
-var segments = d3.arc() //arc generator fucntion
-                .innerRadius(0)
-                .outerRadius(200)
-                .padAngle(.05)
-                .padRadius(50);
-
-// path elements for different sections
-var sections = svg.append("g").attr("transform", "translate(250, 250)").selectAll("path").data(data); //join data
-//append path elements
-sections.enter().append("path").attr("d", segments).attr("fill", function(d){return colors(d.data.foodgroup);});
-
-var content = d3.select("g").selectAll("text").data(data);
-content.enter().append("text").each(function(d){
-    var center = segments.centroid(d);
-    d3.select(this).attr("x", center[0]).attr("y", center[1])
-                    .text(d.data.percent);
-});
-
-
-var legends = svg.append("g").attr("transform", "translate(500, 200)").selectAll(".legends").data(data);
-var legend = legends.enter().append("g").attr("transform", function(d, i){return "translate(0," + (i+1)*30 + ")";});
-legend.append("rect").attr("width", 20).attr("height", 20).attr("fill", function(d){return colors(d.data.foodgroup);});
-legend.append("text").text(function(d){return d.data.foodgroup;})
-        .attr("fill", function(d){return colors(d.data.foodgroup);})
-        .attr("x", 30)
-        .attr("y", 15);
-
-// var legends = svg.append("g").attr("transform", "translate(500, 200)").selectAll(".legends").data(colors);
-// var legend = legends.enter().append("g").attr("transform", function(d, i){return "translate(0," + (i+1)*30 + ")";});
-// legend.append("rect").attr("width", 20).attr("height", 20).attr("fill", function(d){return colors(d.data.foodgroup);});
-// legend.append("text").text(function(d){return d.data.foodgroup;})
-//         .attr("fill", function(d){return colors(d.data.foodgroup);})
-//         .attr("x", 30)
-//         .attr("y", 15);
-
-// svg.selectAll("sections")
-//     .on("click", function() {
-//         d3.select(this)
-//         .attr("fill", "")
-// });
-
-
+    // Initialize meal name
+    // if(moment().hours() >= 0 && moment().hours() < 11){
+    //     $("input[value='breakfast']").prop('checked', true);
+    // }
+    // else if(moment().hours() >= 11 && moment().hours() < 18){
+    //     $("input[value='lunch']").prop('checked', true);
+    // }
+    // else{
+    //     $("input[value='dinner']").prop('checked', true);
+    // }
+})    
 </script>
 
-<!-- <form action='/log_meal', method= "POST">
+<form action='/log_meal', method= "POST">
 
     
     <label>Select the date and time meal consumed</label>
@@ -83,58 +37,54 @@ legend.append("text").text(function(d){return d.data.foodgroup;})
     <input type="radio" name="meal_name" value="dinner">Dinner</input>
     <br>
     <br>
-  Meal component:
-    <select name="meal_component_40">
-        <option value="Carbohydrates">Carbohydrates</option>
-        <option value="Proteins">Proteins</option>
-        <option value="Vegetables">Vegetables</option>
-        <option value="Fruits">Fruits</option>
-    </select>
+    <div style="visibility:hidden;">
+        <select  name="meal_component_40">
+            <option value="Carbohydrates">Carbohydrates</option>
+            <option value="Proteins">Proteins</option>
+            <option selected="selected" value="Vegetables">Vegetables</option>
+            <option value="Fruits">Fruits</option>
+        </select>
 
-    <select name="meal_component_10">
-        <option value="Carbohydrates">Carbohydrates</option>
-        <option value="Proteins">Proteins</option>
-        <option value="Vegetables">Vegetables</option>
-        <option value="Fruits">Fruits</option>
-    </select>
+        <select name="meal_component_10">
+            <option value="Carbohydrates">Carbohydrates</option>
+            <option value="Proteins">Proteins</option>
+            <option value="Vegetables">Vegetables</option>
+            <option selected="selected" value="Fruits">Fruits</option>
+        </select>
 
-    <select name="meal_component_25">
-        <option value="Carbohydrates">Carbohydrates</option>
-        <option value="Proteins">Proteins</option>
-        <option value="Vegetables">Vegetables</option>
-        <option value="Fruits">Fruits</option>
-    </select>
+        <select name="meal_component_25">
+            <option selected="selected" value="Carbohydrates">Carbohydrates</option>
+            <option value="Proteins">Proteins</option>
+            <option value="Vegetables">Vegetables</option>
+            <option value="Fruits">Fruits</option>
+        </select>
 
-    <select name="meal_component_2_25">
-        <option value="Carbohydrates">Carbohydrates</option>
-        <option value="Proteins">Proteins</option>
-        <option value="Vegetables">Vegetables</option>
-        <option value="Fruits">Fruits</option>
-    </select>
-    <br>
-    <br>
-    Drink component:
-    <select name="meal_component_drink">
-        <option value="Water">Water</option>
-        <option value="Juice">Juice</option>
-        <option value="Dairy">Dairy</option>
-        <option value="Soda">Soda</option>
-        <option value="Tea_no_sugar">Tea no sugar</option>
-        <option value="Coffee_no_sugar">Coffee no sugar</option>
-        <option value="Tea_with_sugar">Tea with sugar</option>
-        <option value="Coffee_with_sugar">Coffee with sugar</option>
-    </select>
-    <br>
-    <br>
-    Oil component:
-    <select name="meal_component_oil">
-        <option value="Unsaturated_fat">Unsaturated Fat</option>
-        <option value="Saturated_fat">Saturated Fat</option>
-        <option value="Trans_fat">Trans Fat</option>
-    </select>
-
-    <input type="submit" value="log_meal"></input>
-</form> -->
+        <select name="meal_component_2_25">
+            <option value="Carbohydrates">Carbohydrates</option>
+            <option selected="selected" value="Proteins">Proteins</option>
+            <option value="Vegetables">Vegetables</option>
+            <option value="Fruits">Fruits</option>
+        </select>
+    
+        <select name="meal_component_drink">
+            <option value="Water">Water</option>
+            <option value="Juice">Juice</option>
+            <option value="Dairy">Dairy</option>
+            <option value="Soda">Soda</option>
+            <option value="Tea_no_sugar">Tea no sugar</option>
+            <option value="Coffee_no_sugar">Coffee no sugar</option>
+            <option value="Tea_with_sugar">Tea with sugar</option>
+            <option value="Coffee_with_sugar">Coffee with sugar</option>
+        </select>
+    
+        <select name="meal_component_oil">
+            <option value="Unsaturated_fat">Unsaturated Fat</option>
+            <option value="Saturated_fat">Saturated Fat</option>
+            <option value="Trans_fat">Trans Fat</option>
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Log meal</button>
+</form>
 <br>
 <br>
 

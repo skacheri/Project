@@ -40,23 +40,20 @@
             eventRender: function(eventObj, $el) {
                 var content = ''
                 for (m in eventObj.meal_foodgroups) {
-                    content += JSON.stringify(eventObj.meal_foodgroups[m]);
+                    content += "<div>"+eventObj.meal_foodgroups[m].foodgroup_name + "("+ eventObj.meal_foodgroups[m].percentage_meal +")"+"</div>";
                 }
 
                 // Set the data elements that popover library will use to show the popover
                 $el.data('title', 'Meal foodgroup info')
                 $el.data('content', content);
+                $el.data('html', true)
                 $el.data('toggle', 'popover');
                 // Enable the popover for this event element
                 $el.popover();
             },
-            eventClick: function(calEvent, jsEvent, view) {
-                // $("#meal_info").text('');
-                // for (m in calEvent.meal_foodgroups) {
-                //     //document.write(m);
-                //     $("#meal_info").append(JSON.stringify(calEvent.meal_foodgroups[m]));
-                // }
-            },
+            // eventClick: function(calEvent, jsEvent, view) { 
+            //scratched this as had put it as dv on bottom
+            // },
         })
     }
     $(setCalendarContent);
