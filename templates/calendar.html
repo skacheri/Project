@@ -40,7 +40,8 @@
             eventRender: function(eventObj, $el) {
                 var content = ''
                 for (m in eventObj.meal_foodgroups) {
-                    content += "<div>"+eventObj.meal_foodgroups[m].foodgroup_name + "("+ eventObj.meal_foodgroups[m].percentage_meal +")"+"</div>";
+                    content += eventObj.meal_foodgroups[m].foodgroup_name + "("+ eventObj.meal_foodgroups[m].percentage_meal +")";
+                    //This will be changed to a graph rendering view this is temporary
                 }
 
                 // Set the data elements that popover library will use to show the popover
@@ -52,7 +53,7 @@
                 $el.popover();
             },
             // eventClick: function(calEvent, jsEvent, view) { 
-            //scratched this as had put it as dv on bottom
+            //scratched this as had put it as div on bottom
             // },
         })
     }
