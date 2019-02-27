@@ -76,70 +76,80 @@ function show_input_chart(){
     show_section_labels(data, segments);
     display_legend(svg, data, colors);
     
+    let oil_data = [{name: "Unsaturated fat"},
+                    {name: "Saturated fat"},
+                    {name: "Trans fat"}];
+    
     let circle_oil = svg.append("circle")
-                        .attr("cx", 300)
+                        .attr("cx", 290)
                         .attr("cy", 125)
-                        .attr("r", 25)
+                        .attr("r", 40)
                         .attr("fill", "red")
-                        .style("opacity", 0.5)
-                        .data([{name: "Unsaturated fat", opacity: "0.25"},
-                            {name: "Saturated fat", opacity: "0.5"},
-                            {name: "Trans fat", opacity: "1.0"}]);
+                        .style("opacity", 0.5);
 
-                        // .on("click", function(d) {
-                        //     let current_opacity = d.data.opacity ? d.data.opacity : d.data.next_opacity;
-                        //     for (let id=0;id<data.length;id++) {
-                        //         next_opacity = data[opacity]%data.length;
-                        //         break;
-                        //         }
-                        //     });//////NOT WORKING???///////////
-                        //     d.next_opacity = next_opacity;
-                        //     d3.select(this)
-                        //         .style("opacity", function(d) {
-                        //             return opacity(d.data.next_opacity);
-                        //         })
+    let oil_text = svg.append("text")
+                    .attr("x", 265)
+                    .attr("y", 125)
+                    .data(oil_data)
+                    .text(function(d){
+                        return d.name;
+                        })
+                    .on("click", function(d){
+                        let current_name = d.next_name ? d.next_name : d.name;
+                        let next_name = "";
+                        for(let id=0;id<oil_data.length;id++){
+                            if(oil_data[id].name == current_name){
+                                next_id = (id+1)%(oil_data.length);
+                                next_name = oil_data[next_id].name;
+                                break;
+                            }
+                        }
+                        d.next_name = next_name;
+                        d3.select(this)
+                            .text(function(d) {
+                                return d.next_name;
+                            });
+                    });
 
-    let color_drink = [{name: "Water", color:"lightblue"},
-                        {name:"Juice", color:"red"}, 
-                        {name:"Dairy", color:"blue"},
-                        {name:"Soda", color:"yellow"},
-                        {name:"Tea no sugar", color:"brown"},
-                        {name:"Coffee no sugar", color:"darkbrown"},
-                        {name:"Tea with sugar", color:"brown"},
-                        {name:"Coffee with sugar", color:"darkbrown"}];
+
+    let drink_data = [{name: "Water"},
+                        {name:"Juice"}, 
+                        {name:"Dairy"},
+                        {name:"Soda"},
+                        {name:"Tea no sugar"},
+                        {name:"Coffee no sugar"},
+                        {name:"Tea & sugar"},
+                        {name:"Coffee & sugar"}];
 
     let circle_drink = svg.append("circle")
-                        .attr("cx", 725)
+                        .attr("cx", 750)
                         .attr("cy", 125)
-                        .attr("r", 50)
-                        .data(color_drink)
-                        .attr("fill", function(d) {
-                            return d.color;
-                            })
+                        .attr("r", 75)
+                        .attr("fill", "lightblue");
 
 
         let drink_text = svg.append("text")
-                        .attr("x", 710)
+                        .attr("x", 715)
                         .attr("y", 130)
-                        .data(color_drink)
+                        .data(drink_data)
                         .text(function(d){
                             return d.name;
-                            })
+                        })
                         .on("click", function(d){
-                            let current_name = d.next_name ? d.next_name : d.name;
-                            let next_name = "";
-                            for(let id=0;id<color_drink.length;id++){
-                                if(color_drink[id].name == current_name){
-                                    next_id = (id+1)%(color_drink.length);
-                                    next_name = color_drink[next_id].name;
-                                    break;
-                                }
+                        let current_name = d.next_name ? d.next_name : d.name;
+                        let next_name = "";
+                        for(let id=0;id<drink_data.length;id++){
+                            if(drink_data[id].name == current_name){
+                                next_id = (id+1)%(drink_data.length);
+                                next_name = drink_data[next_id].name;
+                                break;
                             }
-                            d.next_name = next_name;
-                            d3.select(this)
-                                .text(function(d) {
-                                    return d.next_name;
-                                });
+                        }
+                        d.next_name = next_name;
+                        d3.select(this)
+                            .text(function(d) {
+                                return d.next_name;
+                            });
                         });
 }
 
