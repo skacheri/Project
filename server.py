@@ -9,31 +9,8 @@ from jinja2 import StrictUndefined
 import json
 
 app = Flask(__name__)
-
+foodgroup_dictionary = {}
 app.secret_key = "1234"
-
-#################################################################
-#####Update this dict before start of server.py????HHOW##########
-#################################################################
-
-foodgroup_dictionary = {
-                        "Carbohydrates": 1,
-                        "Proteins": 2,
-                        "Vegetables": 3,
-                        "Fruits": 4,
-                        "Water": 5,
-                        "Juice": 6,
-                        "Dairy": 7,
-                        "Soda": 8,
-                        "Tea_no_sugar": 9,
-                        "Coffee_no_sugar": 10,
-                        "Tea_with_sugar": 11,
-                        "Coffee_with_sugar": 12,
-                        "Unsaturated_fat": 13,
-                        "Saturated_fat": 14,
-                        "Trans_fat": 15
-                        }
-
 #-----------------------------------------------------
 
 @app.route('/')
@@ -211,10 +188,16 @@ def logged_out():
 """-----------------------------------------------------------"""
 """-----------------------------------------------------------"""
 
+def init_foodgroups():
+    all_foodgroups = Foodgroup.query.all()
+    for foodgroup in all_foodgroups:
+        foodgroup_dictionary[foodgroup.foodgroup_name] = foodgroup.foodgroup_id
+
 if __name__ == "__main__":
 
     app.debug = True
     connect_to_db(app)
+    init_foodgroups()
     DebugToolbarExtension(app)
 
 

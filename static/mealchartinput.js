@@ -76,9 +76,9 @@ function show_input_chart(){
     show_section_labels(data, segments);
     display_legend(svg, data, colors);
     
-    let oil_data = [{name: "Unsaturated fat"},
-                    {name: "Saturated fat"},
-                    {name: "Trans fat"}];
+    let oil_data = [{name: "Unsaturated Fat", form_value:"Unsaturated_fat"},
+                    {name: "Saturated Fat", form_value:"Saturated_fat"},
+                    {name: "Trans Fat", form_value:"Trans_fat"}];
     
     let circle_oil = svg.append("circle")
                         .attr("cx", 290)
@@ -97,10 +97,12 @@ function show_input_chart(){
                     .on("click", function(d){
                         let current_name = d.next_name ? d.next_name : d.name;
                         let next_name = "";
+                        let next_form_value = "";
                         for(let id=0;id<oil_data.length;id++){
                             if(oil_data[id].name == current_name){
                                 next_id = (id+1)%(oil_data.length);
                                 next_name = oil_data[next_id].name;
+                                next_form_value = oil_data[next_id].form_value;
                                 break;
                             }
                         }
@@ -109,17 +111,19 @@ function show_input_chart(){
                             .text(function(d) {
                                 return d.next_name;
                             });
+                        $("select[name='meal_component_oil']").val(next_form_value);
+
                     });
 
 
-    let drink_data = [{name: "Water"},
-                        {name:"Juice"}, 
-                        {name:"Dairy"},
-                        {name:"Soda"},
-                        {name:"Tea no sugar"},
-                        {name:"Coffee no sugar"},
-                        {name:"Tea & sugar"},
-                        {name:"Coffee & sugar"}];
+    let drink_data = [{name: "Water", form_value:"Water"},
+                        {name:"Juice", form_value:"Juice"}, 
+                        {name:"Dairy", form_value:"Dairy"},
+                        {name:"Soda", form_value:"Soda"},
+                        {name:"Tea no sugar", form_value:"Tea_no_sugar"},
+                        {name:"Coffee no sugar", form_value:"Coffee_no_sugar"},
+                        {name:"Tea & sugar", form_value:"Tea_with_sugar"},
+                        {name:"Coffee & sugar", form_value:"Coffee_with_sugar"}];
 
     let circle_drink = svg.append("circle")
                         .attr("cx", 750)
@@ -138,10 +142,12 @@ function show_input_chart(){
                         .on("click", function(d){
                         let current_name = d.next_name ? d.next_name : d.name;
                         let next_name = "";
+                        let next_form_value = "";
                         for(let id=0;id<drink_data.length;id++){
                             if(drink_data[id].name == current_name){
                                 next_id = (id+1)%(drink_data.length);
                                 next_name = drink_data[next_id].name;
+                                next_form_value = drink_data[next_id].form_value;
                                 break;
                             }
                         }
@@ -150,6 +156,7 @@ function show_input_chart(){
                             .text(function(d) {
                                 return d.next_name;
                             });
+                        $("select[name='meal_component_drink']").val(next_form_value);
                         });
 }
 
