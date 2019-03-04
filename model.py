@@ -30,9 +30,6 @@ class Meal(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
     meal_time = db.Column(db.TIMESTAMP(timezone=True), nullable=True)
     meal_name = db.Column(db.String(50)) #either breakfast, lunch or dinner from user dropdown
-    #2.0 features for calorie count:
-    # meal_description = db.Column(db.String(50), nullable=True) #nullable for now
-    # calories = db.Column(db.Numeric(8, 2), nullable=True) #nullable for now
 
     users = db.relationship("User", backref="meals")
     foodgroups = db.relationship("Foodgroup", secondary="meal_foodgroups", backref="meals")
