@@ -9,34 +9,41 @@ $(function(argument) {
     let today = moment().format('YYYY-MM-DDTHH:mm');
     $("input[name='meal_time']").val(today);
 
-    // Initialize meal name
-    // if(moment().hours() >= 0 && moment().hours() < 11){
-    //     $("input[value='breakfast']").prop('checked', true);
-    // }
-    // else if(moment().hours() >= 11 && moment().hours() < 18){
-    //     $("input[value='lunch']").prop('checked', true);
-    // }
-    // else{
-    //     $("input[value='dinner']").prop('checked', true);
-    // }
+    Initialize meal name
+    if(moment().hours() >= 0 && moment().hours() < 11){
+        $("input[value='breakfast']").prop('checked', true);
+    }
+    else if(moment().hours() >= 11 && moment().hours() < 18){
+        $("input[value='lunch']").prop('checked', true);
+    }
+    else{
+        $("input[value='dinner']").prop('checked', true);
+    }
 })    
 </script>
 
 <form action='/log_meal', method= "POST">
 
-    
-    <label>Select the date and time meal consumed</label>
+    <div class="form-group">    
+    <h5>Select the date and time meal consumed</h5>
     <input type="datetime-local" name="meal_time"></input>
-    <br>
-    <br>
-
- Select Meal name:
-    <br>
-    <input type="radio" name="meal_name" value="breakfast">Breakfast</input>
-    <input type="radio" name="meal_name" value="lunch">Lunch</input>
-    <input type="radio" name="meal_name" value="dinner">Dinner</input>
-    <br>
-    <br>
+    </div>
+    <div class="form-group">
+        <h5>Select Meal name</h5>
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <div class="input-group-text">
+                <input type="radio" name="meal_name" value="breakfast">&nbsp;Breakfast</input>
+            </div>
+            <div class="input-group-text">
+                <input type="radio" name="meal_name" value="lunch">&nbsp;Lunch</input>
+            </div>
+            <div class="input-group-text">
+                <input type="radio" name="meal_name" value="dinner">&nbsp;Dinner</input>
+            </div>
+          </div>
+        </div>
+    </div>
     <div style="visibility:hidden;">
         <select  name="meal_component_40">
             <option value="Carbohydrates">Carbohydrates</option>

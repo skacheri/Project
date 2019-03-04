@@ -4,14 +4,14 @@ from model import User, Meal, Foodgroup, Meal_Foodgroup, db, connect_to_db
 import datetime
 import pytz
 import tzlocal
-
+import bcrypt
 from jinja2 import StrictUndefined
 import json
 
 app = Flask(__name__)
 foodgroup_dictionary = {}
 app.secret_key = "1234"
-#-----------------------------------------------------
+
 
 @app.route('/')
 def homepage():
@@ -19,7 +19,7 @@ def homepage():
 
     return render_template('homepage.html')
 
-#-------------------------------------------------------
+################################################################################
 
 @app.route('/login', methods=['POST'])
 def check_login():
@@ -29,17 +29,19 @@ def check_login():
     password = request.form.get("password")
 
     #Email and password query check if mateches
-    query = User.query.filter(User.email == email, User.password == password).first()
-
+    query = User.query.filter(User.email == email).first()
     if query:
-        session['user_id'] = query.user_id
-        flash('You are successfully logged in')
-        return redirect('/log_meal')
+        if bcrypt.checkpw(password.encode('utf-8'), query.password.encode('utf-8')):
+            session['user_id'] = query.user_id
+            flash('You are successfully logged in')
+            return redirect('/log_meal')
+        else:
+            flash('Hello valued user please try loggin in again')
+            return redirect('/')
     else:
-        flash('Try logging in again or register if first time user!') 
+        flash('Please register')
         return redirect('/')
-
-#--------------------------------------------------------
+################################################################################
 
 
 @app.route('/register')
@@ -48,7 +50,7 @@ def register_user():
 
     return render_template('register.html')
 
-"""--------------------------------------------------------"""
+################################################################################
 
 @app.route('/register', methods=['POST'])
 def check_register_user():
@@ -65,9 +67,10 @@ def check_register_user():
         l_name = request.form.get("l_name")
         email = request.form.get("email")
         password = request.form.get("password")
+        hashed = str(bcrypt.hashpw(bytes(password, 'utf-8'), bcrypt.gensalt()), 'utf-8')
 
         #inserting data obtained from form into the database
-        user = User(f_name=f_name, l_name=l_name, email=email, password=password)
+        user = User(f_name=f_name, l_name=l_name, email=email, password=hashed)
         db.session.add(user)
         db.session.commit()
 
@@ -77,15 +80,14 @@ def check_register_user():
         flash('You will be logged in')
         return redirect('/log_meal')
 
-"""--------------------------------------------------------"""
+################################################################################
 
 @app.route('/log_meal')
 def log_meal():
     """Logging a meal for user"""
-
     return render_template('log_meal.html')
 
-"""---------------------------------------------------------"""
+################################################################################
 
 @app.route('/log_meal', methods=['POST'])
 def logged_meal():
@@ -156,7 +158,7 @@ def logged_meal():
 
     return redirect('/calendar')
 
-"""---------------------------------------------------------"""
+################################################################################
 
 @app.route("/calendar")
 def render_calendar():
@@ -173,27 +175,25 @@ def render_calendar():
                            meals_for_user=meals_for_user,
                            )
 
-
-
-"""---------------------------------------------------------"""
+################################################################################
 
 @app.route("/log_out")
-def logged_out():
+def logged_out():  # pragma no cover
 
     session.pop('user_id', None)
     flash("You are logged out")
 
     return redirect('/')
 
-"""-----------------------------------------------------------"""
-"""-----------------------------------------------------------"""
+################################################################################
+################################################################################
 
 def init_foodgroups():
     all_foodgroups = Foodgroup.query.all()
     for foodgroup in all_foodgroups:
         foodgroup_dictionary[foodgroup.foodgroup_name] = foodgroup.foodgroup_id
 
-if __name__ == "__main__":
+if __name__ == "__main__": # pragma no cover
 
     app.debug = True
     connect_to_db(app)

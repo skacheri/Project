@@ -13,7 +13,7 @@ class User(db.Model):
     f_name = db.Column(db.String(50), nullable=False)
     l_name = db.Column(db.String(50), nullable=False)
     email = db.Column(db.String(64), nullable=False)
-    password = db.Column(db.String(64), nullable=False)
+    password = db.Column(db.String(5000), nullable=False)
 
     def __repr__(self):
         """Provied helpful representation of class User when printed"""
@@ -97,7 +97,7 @@ def connect_to_db(app):
     db.init_app(app)
 
 
-if __name__ == "__main__":
+if __name__ == "__main__":  #pragma no cover
     # As a convenience, if we run this module interactively, it will leave
     # you in a state of being able to work with the database directly.
 

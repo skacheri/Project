@@ -10,7 +10,8 @@ def load_foodgroups():
     Foodgroup.query.delete()
 
     # Read u.user file and insert data
-    for row in open("seed_data/foodgroups.data"):
+    file_handler = open("seed_data/foodgroups.data")
+    for row in file_handler:
         row = row.rstrip()
         foodgroup_id, foodgroup_name = row.split("|")
 
@@ -19,7 +20,7 @@ def load_foodgroups():
 
         # We need to add to the session each foodgroup
         db.session.add(foodgroup)
-
+    file_handler.close()
     # commit
     db.session.commit()
 
