@@ -43,8 +43,8 @@
             eventRender: function(eventObj, $el) {
                 content = function() {
                     //Create our wrapper div (optional).
-                    var $el = $('<div id="#my-popover-div"></div>');
-                    $el.append(get_pie_chart_svg(eventObj.meal_foodgroups).node())
+                    let $el = $('<div id="#my-popover-div"></div>');
+                    $el.append(getmeal_svg(eventObj.meal_foodgroups).node())
                     //Return the jQuery collection.
                     return $el;
                 };

@@ -180,8 +180,11 @@ def render_calendar():
 @app.route("/log_out")
 def logged_out():  
 
-    session.pop('user_id', None)
+
+    del session['user_id']
+    # session.pop('user_id', None)
     flash("You are logged out")
+    
 
     return redirect('/')
 

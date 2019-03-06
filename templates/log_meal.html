@@ -9,7 +9,7 @@ $(function(argument) {
     let today = moment().format('YYYY-MM-DDTHH:mm');
     $("input[name='meal_time']").val(today);
 
-    Initialize meal name
+    // Initialize meal name
     if(moment().hours() >= 0 && moment().hours() < 11){
         $("input[value='breakfast']").prop('checked', true);
     }
