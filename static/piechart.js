@@ -8,7 +8,7 @@ function getmeal_svg(details){
     let data = d3.pie()
                 .sort(null)
                 .value(function(d) {
-                    if (d.percentage_meal == 40 || d.percentage_meal ==25 || d.percentage_meal == 10) {
+                    if (d.percentage_meal == 40 || d.percentage_meal == 25 || d.percentage_meal == 10) {
                         return d.percentage_meal
                     }
                 })(details);
@@ -20,8 +20,10 @@ function getmeal_svg(details){
         .padRadius(5);
 
     // path elements for different sections
-    let sections = svg.append("g").attr("transform", "translate(125, 100)")
-        .selectAll("path").data(data); //join data
+    let sections = svg.append("g")
+                        .attr("transform", "translate(125, 100)")
+                        .selectAll("path")
+                        .data(data); //join data
 
     //append path elements and attach onclick handlers to them
     x = sections.enter()
@@ -45,7 +47,20 @@ function getmeal_svg(details){
                         .attr("cx", 230)
                         .attr("cy", 35)
                         .attr("r", 23)
-                        .attr("fill", "lightblue");
+                        .attr("fill", "lightblue")
+
+    let drink_data = d3.circle()
+                        .value(function(details){
+                            if (details.percentage_meal == 1){
+                                return details.percentage_meal
+                                }
+                            });
+
+    let drink_text = svg.append("text")
+                        .attr("x", 215)
+                        .attr("y", 35)
+                        .text(drink_data);
+
 
 
 
