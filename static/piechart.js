@@ -1,27 +1,25 @@
-function getmeal_svg(details){
+function getpie_svg(details){
     let colors = d3.scaleOrdinal()
         .domain(["Vegetables", "Fruits", "Carbohydrates", "Proteins"])
         .range(["green", "orange", "saddlebrown", "darkviolet"]);
-    const svg = d3.create("svg").attr("width", 275).attr("height", 250);
+    const svg = d3.create("svg").attr("width", 250).attr("height", 150);
 
     // since data that i need to pass is an object, need to pass a function(d or data) which returns d.percent from details and sort null will sort in the order given
     let data = d3.pie()
                 .sort(null)
                 .value(function(d) {
-                    if (d.percentage_meal == 40 || d.percentage_meal == 25 || d.percentage_meal == 10) {
-                        return d.percentage_meal
-                    }
+                        return d.percentage_meal;
                 })(details);
                 console.log(data);
     let segments = d3.arc() //arc generator fucntion
         .innerRadius(0)
-        .outerRadius(100)
+        .outerRadius(50)
         .padAngle(.01)
         .padRadius(5);
 
     // path elements for different sections
     let sections = svg.append("g")
-                        .attr("transform", "translate(125, 100)")
+                        .attr("transform", "translate(50, 50)")
                         .selectAll("path")
                         .data(data); //join data
 
@@ -31,38 +29,54 @@ function getmeal_svg(details){
     x.append("path")
     .attr("d", segments)
     .attr("fill", function(d) {
-            return colors(d.data.foodgroup_name);
+                return colors(d.data.foodgroup_name);
         });
+    show_section_labels(data, segments);
+    display_legend(svg, data, colors);
+   
 
-    function show_section_labels(data, segments){
+    return svg;
+}
+
+function show_section_labels(data, segments){
     let content = d3.select("g").selectAll("text").data(data);
     content.enter().append("text").each(function(d) {
         let center = segments.centroid(d);
         d3.select(this).attr("x", center[0]).attr("y", center[1])
-            .text(d.data.percent);
+            .text(d.data.percentage_meal);
     });
 }
 
-    let circle_drink = svg.append("circle")
-                        .attr("cx", 230)
-                        .attr("cy", 35)
-                        .attr("r", 23)
-                        .attr("fill", "lightblue")
-
-    let drink_data = d3.circle()
-                        .value(function(details){
-                            if (details.percentage_meal == 1){
-                                return details.percentage_meal
-                                }
-                            });
-
-    let drink_text = svg.append("text")
-                        .attr("x", 215)
-                        .attr("y", 35)
-                        .text(drink_data);
 
 
+function display_legend(svg, data, colors){
+    // Make legend data unique since foodgroups maybe repearted in sections
+    legend_data = {}
+    for(d_id in data){
+        legend_data[data[d_id].data.foodgroup_name] = data[d_id];
+    }
 
-
-    return svg;
+    let legends = svg.append("g").attr("transform", "translate(110, -22)").selectAll(".legends").data(Object.values(legend_data));
+    let legend = legends.enter().append("g").attr("transform", function(d, i) {
+        return "translate(0," + (i + 1) * 22 + ")";
+    });
+    legend.append("rect").attr("width", 20).attr("height", 20).attr("fill", function(d) {
+        return colors(d.data.foodgroup_name);
+    });
+    legend.append("text").text(function(d) {
+            return d.data.foodgroup_name;
+        })
+        .attr("fill", function(d) {
+            return colors(d.data.foodgroup_name);
+        })
+        .attr("x", 30)
+        .attr("y", 22);
 }
+
+
+
+
+
+
+
+
