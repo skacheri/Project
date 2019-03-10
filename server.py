@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, session, request, flash
+from flask import Flask, render_template, redirect, session, request, flash, jsonify
 from flask_debugtoolbar import DebugToolbarExtension
 from model import User, Meal, Foodgroup, Meal_Foodgroup, db, connect_to_db
 import datetime
@@ -41,6 +41,17 @@ def check_login():
     else:
         flash('Please register')
         return redirect('/')
+
+
+################################################################################
+
+@app.route('/info')
+def how_to_use():
+    """Displays textual information on how to use meal tracker"""
+
+    return render_template('info.html')
+
+
 ################################################################################
 
 
@@ -126,9 +137,6 @@ def logged_meal():
     # fetching the meal_id of currently entered meal and storing it in variable
     meal_id = meal.meal_id 
 
-    ############################################################################
-    ####Think of a for loop, or a dictionary for bottom chunk of code!!!########
-    ############################################################################
 
     # adding the foodgroups, meal, user, percentage to meal_foodgroups table
     meal_foodgroup40 = Meal_Foodgroup(meal_id=meal_id,
@@ -157,6 +165,40 @@ def logged_meal():
 
 
     return redirect('/calendar')
+
+################################################################################
+
+@app.route("/calendar/get_data")
+def calendar_get_data():
+    """Render data stored by user for each meal"""
+
+    # get user_id from session
+    user_id = session.get('user_id')
+    # get meals for user_id
+    meals_for_user = Meal.query.filter(Meal.user_id==user_id).order_by(
+                    Meal.meal_time).options(db.joinedload("meal_foodgroups")).all()
+
+        
+    events = []
+    #loop through the meals to obtain each meal
+    for meal in meals_for_user:
+        #initialize an empty event object to store each meal data
+        event = {}
+        event['title']=meal.meal_name
+        event['meal_id']=meal.meal_id
+        event['start_utc']=meal.meal_time
+        #initialize an empty meal foodgroup list for each meal food info
+        event['meal_foodgroups']=[]
+
+        #loop through each of the mral_foodgroups in each meal
+        for m in meal.meal_foodgroups:
+            #add to the empty meal_foodgroups list each component in a particular format as defined in model.py
+            event['meal_foodgroups'].append(m.serialize())
+
+        event['allDay']=False
+        #add to the events list each event
+        events.append(event)
+    return jsonify(events)
 
 ################################################################################
 
@@ -192,11 +234,12 @@ def logged_out():
 ################################################################################
 
 def init_foodgroups():
+    """Making the foodgroups dictionary from table on running server.py"""
     all_foodgroups = Foodgroup.query.all()
     for foodgroup in all_foodgroups:
         foodgroup_dictionary[foodgroup.foodgroup_name] = foodgroup.foodgroup_id
 
-if __name__ == "__main__": # pragma no cover
+if __name__ == "__main__":
 
     app.debug = True
     connect_to_db(app)

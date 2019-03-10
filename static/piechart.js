@@ -2,7 +2,7 @@ function getpie_svg(details){
     let colors = d3.scaleOrdinal()
         .domain(["Vegetables", "Fruits", "Carbohydrates", "Proteins"])
         .range(["green", "orange", "saddlebrown", "darkviolet"]);
-    const svg = d3.create("svg").attr("width", 250).attr("height", 150);
+    const svg = d3.create("svg").attr("width", 250).attr("height", 100);
 
     // since data that i need to pass is an object, need to pass a function(d or data) which returns d.percent from details and sort null will sort in the order given
     let data = d3.pie()
@@ -14,7 +14,7 @@ function getpie_svg(details){
     let segments = d3.arc() //arc generator fucntion
         .innerRadius(0)
         .outerRadius(50)
-        .padAngle(.01)
+        .padAngle(.02)
         .padRadius(5);
 
     // path elements for different sections
@@ -31,23 +31,11 @@ function getpie_svg(details){
     .attr("fill", function(d) {
                 return colors(d.data.foodgroup_name);
         });
-    show_section_labels(data, segments);
     display_legend(svg, data, colors);
    
 
     return svg;
 }
-
-function show_section_labels(data, segments){
-    let content = d3.select("g").selectAll("text").data(data);
-    content.enter().append("text").each(function(d) {
-        let center = segments.centroid(d);
-        d3.select(this).attr("x", center[0]).attr("y", center[1])
-            .text(d.data.percentage_meal);
-    });
-}
-
-
 
 function display_legend(svg, data, colors){
     // Make legend data unique since foodgroups maybe repearted in sections

@@ -38,8 +38,10 @@ function show_input_chart(){
     let segments = d3.arc() //arc generator fucntion
         .innerRadius(0)
         .outerRadius(200)
-        .padAngle(.01)
-        .padRadius(50);
+        .padAngle(.04)
+        .padRadius(50)
+        .cornerRadius(5);
+
 
     // path elements for different sections
     let sections = svg.append("g").attr("transform", "translate(500, 250)")
@@ -48,13 +50,13 @@ function show_input_chart(){
     //append path elements and attach onclick handlers to them
     sections.enter()
             .append("path")
+            .style('stroke', 'silver')
+            .style('stroke-width', 5)
             .attr("d", segments)
             .attr("fill", function(d) {
                 return colors(d.data.foodgroup);
                 })
-            ///////////////////////////////////////////////////////////////////
-            //want to add a border outside the plate to make it more platelike/
-            ///////////////////////////////////////////////////////////////////
+
             .on("click", function(d) {
                 let current_foodgroup = d.data.next_foodgroup ? d.data.next_foodgroup : d.data.foodgroup;
                 let next_foodgroup = "";
@@ -81,14 +83,14 @@ function show_input_chart(){
                     {name: "Trans Fat", form_value:"Trans_fat"}];
     
     let circle_oil = svg.append("circle")
-                        .attr("cx", 290)
+                        .attr("cx", 260)
                         .attr("cy", 125)
-                        .attr("r", 40)
+                        .attr("r", 60)
                         .attr("fill", "red")
-                        .style("opacity", 0.5);
+                        .style("opacity", 0.15);
 
     let oil_text = svg.append("text")
-                    .attr("x", 265)
+                    .attr("x", 202)
                     .attr("y", 125)
                     .data(oil_data)
                     .text(function(d){
@@ -133,7 +135,7 @@ function show_input_chart(){
 
 
         let drink_text = svg.append("text")
-                        .attr("x", 715)
+                        .attr("x", 700)
                         .attr("y", 130)
                         .data(drink_data)
                         .text(function(d){
