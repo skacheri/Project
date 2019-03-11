@@ -51,7 +51,7 @@ function show_input_chart(){
     sections.enter()
             .append("path")
             .style('stroke', 'silver')
-            .style('stroke-width', 5)
+            .style('stroke-width', 8)
             .attr("d", segments)
             .attr("fill", function(d) {
                 return colors(d.data.foodgroup);
@@ -83,14 +83,16 @@ function show_input_chart(){
                     {name: "Trans Fat", form_value:"Trans_fat"}];
     
     let circle_oil = svg.append("circle")
-                        .attr("cx", 260)
+                        .attr("cx", 250)
                         .attr("cy", 125)
-                        .attr("r", 60)
+                        .attr("r", 63)
+                        .style("opacity", 0.15)
                         .attr("fill", "red")
-                        .style("opacity", 0.15);
+                        .style("stroke-width", 8)
+                        .style("stroke", "silver");
 
     let oil_text = svg.append("text")
-                    .attr("x", 202)
+                    .attr("x", 195)
                     .attr("y", 125)
                     .data(oil_data)
                     .text(function(d){
@@ -128,14 +130,16 @@ function show_input_chart(){
                         {name:"Coffee & sugar", form_value:"Coffee_with_sugar"}];
 
     let circle_drink = svg.append("circle")
-                        .attr("cx", 750)
+                        .attr("cx", 760)
                         .attr("cy", 125)
                         .attr("r", 75)
-                        .attr("fill", "lightblue");
+                        .attr("fill", "lightblue")
+                        .style("stroke-width", 8)
+                        .style("stroke", "silver");
 
 
         let drink_text = svg.append("text")
-                        .attr("x", 700)
+                        .attr("x", 710)
                         .attr("y", 130)
                         .data(drink_data)
                         .text(function(d){

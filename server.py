@@ -16,7 +16,8 @@ app.secret_key = "1234"
 @app.route('/')
 def homepage():
     """Homepage"""
-
+    if 'user_id' in session:
+        return redirect('/log_meal')
     return render_template('homepage.html')
 
 ################################################################################
@@ -96,6 +97,11 @@ def check_register_user():
 @app.route('/log_meal')
 def log_meal():
     """Logging a meal for user"""
+
+    if not session:
+        flash('You need to login prior to accessing this page')
+        # del session
+        return redirect('/')
     return render_template('log_meal.html')
 
 ################################################################################
@@ -206,6 +212,10 @@ def calendar_get_data():
 def render_calendar():
     """Render data stored by user for each meal"""
 
+    if not session:
+        flash('You need to login prior to accessing this page')
+        return redirect('/')
+
     # get user_id from session
     user_id = session.get('user_id')
     # get meals for user_id
@@ -224,7 +234,6 @@ def logged_out():
 
 
     del session['user_id']
-    # session.pop('user_id', None)
     flash("You are logged out")
     
 
