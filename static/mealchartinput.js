@@ -42,7 +42,6 @@ function show_input_chart(){
         .padRadius(50)
         .cornerRadius(5);
 
-
     // path elements for different sections
     let sections = svg.append("g").attr("transform", "translate(500, 250)")
         .selectAll("path").data(data); //join data
@@ -56,7 +55,7 @@ function show_input_chart(){
             .attr("fill", function(d) {
                 return colors(d.data.foodgroup);
                 })
-
+            .attr("class", "pie_class")
             .on("click", function(d) {
                 let current_foodgroup = d.data.next_foodgroup ? d.data.next_foodgroup : d.data.foodgroup;
                 let next_foodgroup = "";
@@ -74,6 +73,7 @@ function show_input_chart(){
                     });
                 $("select[name='"+d.data.select_id+"']").val(d.data.next_foodgroup);
             });
+    
     
     show_section_labels(data, segments);
     display_legend(svg, data, colors);
@@ -95,6 +95,7 @@ function show_input_chart(){
                     .attr("x", 195)
                     .attr("y", 125)
                     .data(oil_data)
+                    .attr("class", "oil_text")
                     .text(function(d){
                         return d.name;
                         })
@@ -142,6 +143,7 @@ function show_input_chart(){
                         .attr("x", 710)
                         .attr("y", 130)
                         .data(drink_data)
+                        .attr("class", "drink_text")
                         .text(function(d){
                             return d.name;
                         })
