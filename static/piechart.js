@@ -1,7 +1,7 @@
 function getpie_svg(details){
     let colors = d3.scaleOrdinal()
         .domain(["Vegetables", "Fruits", "Carbohydrates", "Proteins"])
-        .range(["green", "orange", "saddlebrown", "darkviolet"]);
+        .range(["green", "indianred", "peru", "purple"]);
     const svg = d3.create("svg").attr("width", 250).attr("height", 100);
 
     // since data that i need to pass is an object, need to pass a function(d or data) which returns d.percent from details and sort null will sort in the order given

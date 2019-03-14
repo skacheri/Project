@@ -1,8 +1,8 @@
 {% extends 'base.html' %}
 {% block content %}
 <script src='/static/mealchartinput.js'></script>
-<div class='row'>
-    <div class='col-md-8 bg-blur'>
+<div class='row bg-blur'>
+    <div class='col-md-8'>
         <div id="pie_chart"></div>
     </div>
 <!-- <span class="dot"></span> -->
@@ -25,16 +25,16 @@ $(function(argument) {
     }
 })    
 </script>
-
-<div class='col-md-4 bg-blur'>
+<div class="row">&nbsp;</div>
+<div class='col-md-4'>
 <form action='/log_meal', method= "POST">
 
     <div class="form-group">    
-    <h5>Select the date and time meal consumed</h5>
+    <h5>Select date and time of meal </h5>
     <input type="datetime-local" name="meal_time"></input>
     </div>
     <div class="form-group">
-        <h5>Select Meal name</h5>
+        <h5>Select Mealtype</h5>
         <div class="input-group">
           <div class="input-group-prepend">
             <div class="input-group-text">
@@ -49,6 +49,7 @@ $(function(argument) {
           </div>
         </div>
     </div>
+    <button type="submit" class="btn btn-primary">Log meal</button>
     <div style="visibility:hidden;">
         <select  name="meal_component_40">
             <option value="Carbohydrates">Carbohydrates</option>
@@ -95,27 +96,20 @@ $(function(argument) {
             <option value="Trans_fat">Trans Fat</option>
         </select>
     </div>
-    <button type="submit" class="btn btn-primary">Log meal</button>
 </form>
+<div>&nbsp;</div>
+<div class='small float-right' id="food_clarification">
+<p class='text-muted'>Foodgroups assistance</p>
+<ul>
+<li><a href="https://www.hsph.harvard.edu/nutritionsource/what-should-you-eat/whole-grains/" target="_blank">Carbohydrates</a></li>
+<li><a href="https://www.hsph.harvard.edu/nutritionsource/what-should-you-eat/protein/" target="_blank">Proteins</a></li>
+<li><a href="https://www.hsph.harvard.edu/nutritionsource/what-should-you-eat/vegetables-and-fruits/" target="_blank">Vegetables and Fruits</a></li>
+<li><a href="https://www.hsph.harvard.edu/nutritionsource/healthy-drinks/" target="_blank">Drinks</a></li>
+<li><a href="https://www.hsph.harvard.edu/nutritionsource/what-should-you-eat/fats-and-cholesterol/" target="_blank">Fats</a></li>
+</ul>
 </div>
-</div>
-
-<div class='row'>
-
-<div id="food_clarification">
-For clarification on foodgroups:
-
-<a href="https://www.hsph.harvard.edu/nutritionsource/what-should-you-eat/whole-grains/">Carbohydrates</a>
-<br>
-<a href="https://www.hsph.harvard.edu/nutritionsource/what-should-you-eat/protein/">Proteins</a>
-<br>
-<a href="https://www.hsph.harvard.edu/nutritionsource/what-should-you-eat/vegetables-and-fruits/">Vegetables and Fruits</a>
-<br>
-<a href="https://www.hsph.harvard.edu/nutritionsource/healthy-drinks/">Drinks</a>
-<br>
-<a href="https://www.hsph.harvard.edu/nutritionsource/what-should-you-eat/fats-and-cholesterol/">Fats</a>
-
 </div>
 </div>
 
+</div>
 {% endblock %}

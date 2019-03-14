@@ -8,7 +8,7 @@ function show_input_chart(){
     // const height = 500;
     let colors = d3.scaleOrdinal()
         .domain(["Vegetables", "Fruits", "Carbohydrates", "Proteins"])
-        .range(["green", "orange", "saddlebrown", "darkviolet"]);
+        .range(["green", "indianred", "peru", "purple"]);
 
     let svg = d3.select('#pie_chart').append('svg').attr('width', 1000).attr('height', 500);
 
@@ -34,7 +34,7 @@ function show_input_chart(){
                         .attr("cy", 250)
                         .attr("r", 220)
                         .style("opacity", 1)
-                        .attr("fill", "darkgoldenrod");
+                        .attr("fill", "#87654b");
 
     // since data that i need to pass is an object, need to pass a function(d or data) which returns d.percent from details and sort null will sort in the order given
     let data = d3.pie()
@@ -55,8 +55,8 @@ function show_input_chart(){
     //append path elements and attach onclick handlers to them
     sections.enter()
             .append("path")
-            // .style('stroke', 'beige')
-            // .style('stroke-width', 8)
+            .style('stroke', '#87654b')
+            .style('stroke-width', 5)
             .attr("d", segments)
             .attr("fill", function(d) {
                 return colors(d.data.foodgroup);
@@ -84,22 +84,26 @@ function show_input_chart(){
     show_section_labels(data, segments);
     display_legend(svg, data, colors);
     
-    let oil_data = [{name: "Unsaturated Fat", form_value:"Unsaturated_fat"},
-                    {name: "Saturated Fat", form_value:"Saturated_fat"},
-                    {name: "Trans Fat", form_value:"Trans_fat"}];
+    let oil_data = [{name: "Unsaturated", form_value:"Unsaturated_fat"},
+                    {name: "Saturated", form_value:"Saturated_fat"},
+                    {name: "Trans", form_value:"Trans_fat"}];
     
     let circle_oil = svg.append("circle")
-                        .attr("cx", 100)
+                        .attr("cx", 84)
                         .attr("cy", 100)
                         .attr("r", 63)
                         .style("opacity", 1)
-                        .attr("fill", "#FFFF00")
+                        .attr("fill", "gold")
                         .style("stroke-width", 8)
-                        .style("stroke", "darkgoldenrod");
+                        .style("stroke", "#87654b");
+    let fat_print = svg.append("text")
+                        .attr("x", 65)
+                        .attr("y", 80)
+                        .text("Fat:");
 
     let oil_text = svg.append("text")
-                    .attr("x", 40)
-                    .attr("y", 100)
+                    .attr("x", 35)
+                    .attr("y", 103)
                     .data(oil_data)
                     .attr("class", "oil_text")
                     .text(function(d){
@@ -137,16 +141,16 @@ function show_input_chart(){
                         {name:"Coffee & sugar", form_value:"Coffee_with_sugar"}];
 
     let circle_drink = svg.append("circle")
-                        .attr("cx", 560)
+                        .attr("cx", 580)
                         .attr("cy", 100)
                         .attr("r", 63)
                         .attr("fill", "lightblue")
                         .style("stroke-width", 8)
-                        .style("stroke", "darkgoldenrod");
+                        .style("stroke", "#87654b");
 
 
         let drink_text = svg.append("text")
-                        .attr("x", 510)
+                        .attr("x", 530)
                         .attr("y", 100)
                         .data(drink_data)
                         .attr("class", "drink_text")
@@ -175,13 +179,12 @@ function show_input_chart(){
 }
 
 
-
 function show_section_labels(data, segments){
     let content = d3.select("g").selectAll("text").data(data);
     content.enter().append("text").each(function(d) {
         let center = segments.centroid(d);
         d3.select(this).attr("x", center[0]).attr("y", center[1])
-            .text(d.data.percent);
+            .text(d.data.percent+"%");
     });
 }
 
