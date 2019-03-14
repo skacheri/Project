@@ -2,7 +2,7 @@
 {% block content %}
 <script src='/static/mealchartinput.js'></script>
 <div class='row'>
-    <div class='col'>
+    <div class='col-md-8 bg-blur'>
         <div id="pie_chart"></div>
     </div>
 <!-- <span class="dot"></span> -->
@@ -26,7 +26,7 @@ $(function(argument) {
 })    
 </script>
 
-<div class='col'>
+<div class='col-md-4 bg-blur'>
 <form action='/log_meal', method= "POST">
 
     <div class="form-group">    
@@ -105,7 +105,7 @@ $(function(argument) {
 <div id="food_clarification">
 For clarification on foodgroups:
 
-<a href="https://www.hsph.harvard.edu/nutritionsource/what-should-you-eat/whole-grains/">Whole Grains</a>
+<a href="https://www.hsph.harvard.edu/nutritionsource/what-should-you-eat/whole-grains/">Carbohydrates</a>
 <br>
 <a href="https://www.hsph.harvard.edu/nutritionsource/what-should-you-eat/protein/">Proteins</a>
 <br>

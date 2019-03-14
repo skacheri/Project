@@ -253,7 +253,7 @@ if __name__ == "__main__":
     app.debug = True
     connect_to_db(app)
     init_foodgroups()
-    DebugToolbarExtension(app)
+    # DebugToolbarExtension(app)
 
 
     app.run(port=5000, host='0.0.0.0')

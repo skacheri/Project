@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>Your plate tracker</title>
-    <link rel="icon" href="data:,">
+    <link rel="icon" href="/static/favicon.ico">
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
@@ -18,7 +18,7 @@
 
 <div class="bg" ></div>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="/">Meal tracker</a>
+  <a class="navbar-brand text-light" href="/">Meal tracker</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -26,31 +26,36 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
-        <a class="nav-link" href="/info">How to use Mealtracker<span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item active">
-        <a class="nav-link" href="/log_meal">Log Meal <span class="sr-only">(current)</span></a>
+        <a class="nav-link text-light" href="/log_meal">Log Meal <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/calendar">Calendar</a>
-      </li>
-        {% if 'user_id' in session %}
-          <li class="nav-item">
-          <a class="nav-link" href="/log_out">Logout</a>
-        {% endif %}
+        <a class="nav-link text-light" href="/calendar">Calendar</a>
       </li>
     </ul>
+    <form class="form-inline my-2 my-lg-0">
+      <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link text-light" href="/info">How to use Mealtracker</a>
+      </li>
+      {% if 'user_id' in session %}
+          <li class="nav-item active">
+            <a class="nav-link text-light" href="/log_out">Logout</a>
+          </li>
+        {% endif %}
+    </form>
   </div>
 </nav>
 <body>
 <div class="container">
   <!-- Content here -->
     {% for message in get_flashed_messages() %}
-
-        {{ message }}
-        
+      <div class="alert alert-warning alert-dismissible fade show" role="alert">
+  {{ message }}
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
     {% endfor %}
-
 
     {% block content %}
 

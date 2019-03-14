@@ -29,6 +29,12 @@ function show_input_chart(){
         percent: 25,
         select_id: "meal_component_2_25"
     }]
+    let plate=svg.append("circle")
+                        .attr("cx", 330)
+                        .attr("cy", 250)
+                        .attr("r", 220)
+                        .style("opacity", 1)
+                        .attr("fill", "darkgoldenrod");
 
     // since data that i need to pass is an object, need to pass a function(d or data) which returns d.percent from details and sort null will sort in the order given
     let data = d3.pie()
@@ -43,14 +49,14 @@ function show_input_chart(){
         .cornerRadius(5);
 
     // path elements for different sections
-    let sections = svg.append("g").attr("transform", "translate(500, 250)")
+    let sections = svg.append("g").attr("transform", "translate(330, 250)")
         .selectAll("path").data(data); //join data
 
     //append path elements and attach onclick handlers to them
     sections.enter()
             .append("path")
-            .style('stroke', 'silver')
-            .style('stroke-width', 8)
+            // .style('stroke', 'beige')
+            // .style('stroke-width', 8)
             .attr("d", segments)
             .attr("fill", function(d) {
                 return colors(d.data.foodgroup);
@@ -83,17 +89,17 @@ function show_input_chart(){
                     {name: "Trans Fat", form_value:"Trans_fat"}];
     
     let circle_oil = svg.append("circle")
-                        .attr("cx", 250)
-                        .attr("cy", 125)
+                        .attr("cx", 100)
+                        .attr("cy", 100)
                         .attr("r", 63)
-                        .style("opacity", 0.15)
-                        .attr("fill", "red")
+                        .style("opacity", 1)
+                        .attr("fill", "#FFFF00")
                         .style("stroke-width", 8)
-                        .style("stroke", "silver");
+                        .style("stroke", "darkgoldenrod");
 
     let oil_text = svg.append("text")
-                    .attr("x", 195)
-                    .attr("y", 125)
+                    .attr("x", 40)
+                    .attr("y", 100)
                     .data(oil_data)
                     .attr("class", "oil_text")
                     .text(function(d){
@@ -131,17 +137,17 @@ function show_input_chart(){
                         {name:"Coffee & sugar", form_value:"Coffee_with_sugar"}];
 
     let circle_drink = svg.append("circle")
-                        .attr("cx", 760)
-                        .attr("cy", 125)
-                        .attr("r", 75)
+                        .attr("cx", 560)
+                        .attr("cy", 100)
+                        .attr("r", 63)
                         .attr("fill", "lightblue")
                         .style("stroke-width", 8)
-                        .style("stroke", "silver");
+                        .style("stroke", "darkgoldenrod");
 
 
         let drink_text = svg.append("text")
-                        .attr("x", 710)
-                        .attr("y", 130)
+                        .attr("x", 510)
+                        .attr("y", 100)
                         .data(drink_data)
                         .attr("class", "drink_text")
                         .text(function(d){
@@ -180,7 +186,7 @@ function show_section_labels(data, segments){
 }
 
 function display_legend(svg, data, colors){
-    let legends = svg.append("g").attr("transform", "translate(750, 300)").selectAll(".legends").data(data);
+    let legends = svg.append("g").attr("transform", "translate(550, 300)").selectAll(".legends").data(data);
     let legend = legends.enter().append("g").attr("transform", function(d, i) {
         return "translate(0," + (i + 1) * 30 + ")";
     });

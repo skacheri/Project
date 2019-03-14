@@ -1,25 +1,33 @@
 {% extends 'base.html' %}
 {% block content %}
 
+<div class="row">
+<div class='col-md-4'></div>
+
+<div class='col-md-4 bg-blur'>
 <form action="/register", method= "POST">
+    <div class="form-group">
     <label>First Name
-        <input type="text" name="f_name"></input>
+        <input class="form-control" type="text" name="f_name"></input>
     </label>
     <br> 
     <label>Last Name
-        <input type="text" name="l_name"></input>
+        <input class="form-control" type="text" name="l_name"></input>
     </label>
     <br>      
     <label>Email address
-        <input type="text" name="email"></input>
+        <input class="form-control" type="text" name="email"></input>
     </label>
     <br>
     <label>Password
-        <input type="text" name ="password"></input>
+        <input class="form-control" type="text" name ="password"></input>
     </label>
     <br>
-    <input type="submit" value="register"></input>
+    <input type="submit" class='btn btn-primary' value="register"></input>
+</div>
 </form>
-
+</div>
+<div class='col-md-4'></div>
+</div>
 {% endblock %}
 
