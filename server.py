@@ -250,7 +250,7 @@ def init_foodgroups():
 
 if __name__ == "__main__":
 
-    app.debug = True
+    # app.debug = True
     connect_to_db(app)
     init_foodgroups()
     # DebugToolbarExtension(app)
