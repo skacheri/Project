@@ -14,24 +14,34 @@ Mealtracker was created by Shimoni Kacheria, MD. Learn more about the developer 
 
 **Tech Stack:**
 
--Python
--Flask
--Jinja2
--SQLAlchemy
--HTML
--CSS
--Javascript
--JQuery
--Bootstrap
--Python unittest module
--Moment.js
--D3.js
--FullCalendar.io
--Pytz
--bcrypt
--Datetime modeule in python
+- Python
+- Flask
+- Jinja2
+- SQLAlchemy
+- HTML
+- CSS
+- Javascript
+- JQuery
+- Bootstrap
+- Python unittest module
+- Moment.js
+- D3.js
+- FullCalendar.io
+- Pytz
+- bcrypt
+- Datetime modeule in python
 
 
 Mealtracker is an app built on a Flask server with a PostgresSQL database with SQLAlchemy as the ORM. The frontend templating uses HTML, Jinja2, Bootstrap, CSS, Javascript also uses JQuery and Javascript built in libraries Fullcalendar.io, D3.js for visualization, moment.js to capture current time
+
+## Animated page views
+### Log in page
+![Log in](/static/login.gif)
+
+### Log meal page
+![Log meal](/static/log.gif)
+
+### Calendar page
+![Calendar](/static/cal.gif)
 
 
