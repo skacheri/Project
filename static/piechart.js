@@ -23,7 +23,7 @@ function getpie_svg(details){
                         .selectAll("path")
                         .data(data); //join data
 
-    //append path elements and attach onclick handlers to them
+    //append path elements
     x = sections.enter()
 
     x.append("path")
